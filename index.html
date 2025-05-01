@@ -59,15 +59,15 @@
         <h2>Welcome to the Study!</h2>
         <p>Please enter your Participant ID to begin:</p>
         <input type="text" id="participantIdInput" placeholder="e.g. abc123" />
-        <p>In this study, you will see an image with a <strong>green dot</strong> and a <strong>red circle</strong>, plus
-            a sentence describing a region that exists in the image.</p>
+        <p>In this study, you will see an image with a <strong>red circle</strong>, plus
+            a sentence describing a region in the image. The sentence will refer to an object or location in the image — it may mention something like “the chair at (300, 250)”.</p>
         <p>Your task is to:</p>
         <ul>
             <li>Choose <strong>"Yes"</strong> if <u>any part</u> of the described region is inside the red circle.</li>
-            <li>Choose <strong>"No"</strong> otherwise.</li>
+            <li>Choose <strong>"No"</strong> if the described object or region is <u>completely outside</u> the red circle.</li>
         </ul>
-        <p>For example, if the sentence describes a chair, and a chair is inside the red circle, choose "Yes".</p>
-        <p>If you are unsure, use your best judgement.</p>
+        <p>For example, if the sentence describes a chair, and a chair is inside or partially inside the red circle, choose "Yes".</p>
+        <p>If you are unsure or the sentence region is ambiguous, use your best judgement.</p>
         <button id="startButton" disabled>Start Study</button>
     </div>
 
@@ -76,19 +76,17 @@
         <button id="toggleInstructions">Show Instructions</button>
         <div id="instructions-panel">
             <h3>Detailed Instructions</h3>
-            <p>You will be shown:</p>
+            <p>In this study, you will see an image with a <strong>red circle</strong>, plus
+                a sentence describing a region in the image. The sentence will refer to an object or location in the image — it may
+                mention something like “the chair at (300, 250)”.</p>
+            <p>Your task is to:</p>
             <ul>
-                <li>An image with a green dot and red circle.</li>
-                <li>A sentence referring to a region or object that exists in the image.
-                </li>
+                <li>Choose <strong>"Yes"</strong> if <u>any part</u> of the described region is inside the red circle.</li>
+                <li>Choose <strong>"No"</strong> if the described object or region is <u>completely outside</u> the red circle.</li>
             </ul>
-            <p><strong>Judgment Rule:</strong>
-                Select “Yes” if any part of the described object/region lies inside the red circle.
-                Otherwise, select “No.”</p>
-            <p>For example, if the sentence describes a chair, and a chair is partially inside the red circle, choose "Yes".
-            </p>
-            <p>If you are unsure, use your best judgement.</p>
-            <p><em>We’re testing rough alignment, not pixel-perfect accuracy.</em></p>
+            <p>For example, if the sentence describes a chair, and a chair is inside or partially inside the red circle, choose
+                "Yes".</p>
+            <p>If you are unsure or the sentence region is ambiguous, use your best judgement.</p>
         </div>
     
         <p id="progress"></p>
