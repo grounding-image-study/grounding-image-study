@@ -60,15 +60,34 @@
         <p>Please enter your Participant ID to begin:</p>
         <input type="text" id="participantIdInput" placeholder="e.g. abc123" />
         <p>In this study, you will see an image with a <strong>blue circle</strong>, plus
-            a sentence describing a region in the image. The sentence will refer to an object or location in the image — it may mention something like “the chair on the left side of the room”.</p>
+        a sentence describing a region in the image. The sentence will refer to an object or location in the image — for
+        example, "the chair on the left side of the room." The sentence will include a phrase "[shown with blue
+        circle]" to indicate which part of the sentence corresponds to what you should be looking for in the blue circle.</p>
         <p>Your task is to:</p>
         <ul>
             <li>Choose <strong>"Yes"</strong> if <u>any part</u> of the described region is inside the blue circle.</li>
             <li>Choose <strong>"No"</strong> if the described object or region is <u>completely outside</u> the blue circle.</li>
+            <li>Choose <strong>"Unsure"</strong> if you are unsure or the sentence region is ambiguous.</li>
         </ul>
         <p>For example, if the sentence describes a chair, and a chair is inside or partially inside the blue circle, choose "Yes".</p>
-        <p>If you are unsure or the sentence region is ambiguous, use your best judgement.</p>
         <p>Some images may have dots or lines on them with numbers or symbols. These should be ignored unless they are part of the sentence description.</p>
+
+        <div class="example-section">
+            <h3>Example</h3>
+            <p>Here's an example to help you understand:</p>
+            <img src="data/examples/val_Counting_16_1.png" alt="Example image with blue circle" style="max-width: 100%;">
+            <div class="example-items">
+                <div class="example-item">
+                    <p><strong>Sentence:</strong> "I will examine the school bus [shown with blue circle]"</p>
+                    <p><strong>Answer:</strong> Yes - because the blue circle overlaps with the school bus</p>
+                </div>
+                <div class="example-item">
+                    <p><strong>Sentence:</strong> "Let's look at the people standing around [shown with blue circle]"</p>
+                    <p><strong>Answer:</strong> No - because the people are completely outside the blue circle</p>
+                </div>
+            </div>
+        </div>
+
         <button id="startButton" disabled>Start Study</button>
     </div>
 
@@ -78,18 +97,35 @@
         <div id="instructions-panel">
             <h3>Detailed Instructions</h3>
             <p>In this study, you will see an image with a <strong>blue circle</strong>, plus
-                a sentence describing a region in the image. The sentence will refer to an object or location in the image — it may
-                mention something like “the chair at (300, 250)”.</p>
+            a sentence describing a region in the image. The sentence will refer to an object or location in the image — for
+            example, "the chair on the left side of the room." The sentence will include a phrase "[shown with blue
+            circle]" to indicate which part of the sentence corresponds to what you should be looking for in the blue circle.</p>
             <p>Your task is to:</p>
             <ul>
                 <li>Choose <strong>"Yes"</strong> if <u>any part</u> of the described region is inside the blue circle.</li>
                 <li>Choose <strong>"No"</strong> if the described object or region is <u>completely outside</u> the blue circle.</li>
+                <li>Choose <strong>"Unsure"</strong> if you are unsure or the sentence region is ambiguous.</li>
             </ul>
             <p>For example, if the sentence describes a chair, and a chair is inside or partially inside the blue circle, choose
                 "Yes".</p>
-            <p>If you are unsure or the sentence region is ambiguous, use your best judgement.</p>
             <p>Some images may have dots or lines on them with numbers or symbols. These should be ignored unless they are part of the
                 sentence description.</p>
+            
+            <div class="example-section">
+                <h3>Example</h3>
+                <p>Here's an example to help you understand:</p>
+                <img src="data/examples/val_Counting_16_1.png" alt="Example image with blue circle" style="max-width: 100%;">
+                <div class="example-items">
+                    <div class="example-item">
+                        <p><strong>Sentence:</strong> "I will examine the school bus [shown with blue circle]"</p>
+                        <p><strong>Answer:</strong> Yes - because the blue circle overlaps with the school bus</p>
+                    </div>
+                    <div class="example-item">
+                        <p><strong>Sentence:</strong> "Let's look at the people standing around [shown with blue circle]"</p>
+                        <p><strong>Answer:</strong> No - because the people are completely outside the blue circle</p>
+                    </div>
+                </div>
+            </div>
         </div>
     
         <p id="progress"></p>
@@ -99,7 +135,9 @@
         <form id="responseForm">
             <fieldset id="responseOptions" disabled>
                 <label><input type="radio" name="answer" value="Yes" required> Yes</label><br>
-                <label><input type="radio" name="answer" value="No"> No</label><br><br>
+                <label><input type="radio" name="answer" value="No"> No</label><br>
+                <label><input type="radio" name="answer" value="Unsure"> Unsure</label><br>
+                <div style="margin-top: 15px;"></div>
                 <button type="submit" id="nextButton" disabled>Next</button>
             </fieldset>
         </form>
