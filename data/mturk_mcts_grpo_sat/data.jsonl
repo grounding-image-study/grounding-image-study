@@ -1,0 +1,10 @@
+{"img_path": "data/mturk_mcts_grpo_sat/images/0_1.png", "sentence": "Next, analyzing the position of the chair at (268, 154) in Image 1, it seems more stationary compared to the similar area in Image 2.", "id": "0", "index": 1}
+{"img_path": "data/mturk_mcts_grpo_sat/images/1_1.png", "sentence": "Let's confirm this by checking the middle wall near the table (710, 340).", "id": "1", "index": 1}
+{"img_path": "data/mturk_mcts_grpo_sat/images/4_0.png", "sentence": "The chair near the \"7\" is located at (236, 193), which is slightly left and forward from where the \"straight\" view starts.", "id": "4", "index": 0}
+{"img_path": "data/mturk_mcts_grpo_sat/images/5_1.png", "sentence": "Inspecting the plant at (205,303) reveals that it seems stationary as well.", "id": "5", "index": 1}
+{"img_path": "data/mturk_mcts_grpo_sat/images/7_4.png", "sentence": "Comparing the third bedroom window frame location (330, 150) in the two images reveals consistent alignment, suggesting no significant movement affecting the sofa, confirming the general pattern of movement.", "id": "7", "index": 4}
+{"img_path": "data/mturk_mcts_grpo_sat/images/9_2.png", "sentence": "In Image 1, observe the chair's location (400, 270).", "id": "9", "index": 2}
+{"img_path": "data/mturk_mcts_grpo_sat/images/10_3.png", "sentence": "Next, consider the position of the books on the table at (305, 221).", "id": "10", "index": 3}
+{"img_path": "data/mturk_mcts_grpo_sat/images/11_3.png", "sentence": "Based on the plant's visibility near (700, 300), the image suggests that despite the shifting perspective, the plant retains its upright posture, hinting that it has been slightly rotated rather than truly moved.", "id": "11", "index": 3}
+{"img_path": "data/mturk_mcts_grpo_sat/images/12_5.png", "sentence": "In Image 1, the table is more to the left at (90, 230).", "id": "12", "index": 5}
+{"img_path": "data/mturk_mcts_grpo_sat/images/13_1.png", "sentence": "From this standpoint, the angle required to meet the target (around (6, 180)) means turning left by a significant degree would suffice.", "id": "13", "index": 1}

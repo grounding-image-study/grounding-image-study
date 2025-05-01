@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Dot-in-Region Verification Study</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            max-width: 700px;
+            margin: 40px auto;
+        }
+
+        img {
+            display: block;
+            margin: 20px 0;
+            max-width: 100%;
+        }
+
+        #completion {
+            display: none;
+        }
+
+        #task {
+            display: none;
+        }
+
+        #instructions-panel {
+            display: none;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 20px;
+            background: #f9f9f9;
+        }
+
+        #intro {
+            border: 1px solid #ccc;
+            padding: 20px;
+            background: #f0f0f0;
+            margin-bottom: 20px;
+        }
+
+        #startButton,
+        #toggleInstructions,
+        #nextButton {
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Image Point Verification</h1>
+
+    <!-- 1) Intro screen -->
+    <div id="intro">
+        <h2>Welcome to the Study!</h2>
+        <p>In this study, you will see images with a <strong>green dot</strong> and a <strong>red circle</strong>, plus
+            a sentence describing an object or region in the image.</p>
+        <p>Your task is simple:</p>
+        <ul>
+            <li>Choose <strong>"Yes"</strong> if <u>any part</u> of the described region is inside the red circle.</li>
+            <li>Choose <strong>"No"</strong> otherwise.</li>
+        </ul>
+        <button id="startButton">Start Study</button>
+    </div>
+
+    <!-- 2) Main task -->
+    <div id="task">
+        <!-- 2a) Toggleable instructions -->
+        <button id="toggleInstructions">Show Instructions</button>
+        <div id="instructions-panel">
+            <h3>Detailed Instructions</h3>
+            <p>You will be shown:</p>
+            <ul>
+                <li>An image with a green dot and red circle (100×100 px radius).</li>
+                <li>A sentence referring to a region or object, often with coordinates (e.g. <code>(250, 150)</code>).
+                </li>
+            </ul>
+            <p><strong>Judgment Rule:</strong>
+                Select “Yes” if any part of the described object/region lies inside the red circle.
+                Otherwise, select “No.”</p>
+            <p><em>We’re testing rough alignment, not pixel-perfect accuracy.</em></p>
+        </div>
+
+        <!-- 3) Progress indicator -->
+        <p id="progress"></p>
+
+        <!-- Sentence + Image -->
+        <p id="sentence"></p>
+        <img id="image" src="" alt="Task image">
+
+        <!-- 4) Response form, disabled until image loads -->
+        <form id="responseForm">
+            <fieldset id="responseOptions" disabled>
+                <label><input type="radio" name="answer" value="Yes" required> Yes</label><br>
+                <label><input type="radio" name="answer" value="No"> No</label><br><br>
+                <button type="submit" id="nextButton" disabled>Next</button>
+            </fieldset>
+        </form>
+    </div>
+
+    <!-- Completion screen -->
+    <div id="completion">
+        <h2>Thank you!</h2>
+        <p>Your completion code is: <strong>POINTCLASSIFICATION135</strong></p>
+    </div>
+
+    <script>
+        (async function () {
+            const STUDY = 'mturk_mcts_grpo_sat';
+            const DATA_PATH = `data/${STUDY}/data.jsonl`;
+            const SUBMIT_URL = 'https://script.google.com/macros/s/AKfycby93WIxDfo4fx1Mvl2UO84MUO9qI3JMKWp6MAIW3wY35BA5aXCPSjiHUdmLR_CxK1N-5A/exec';
+
+            // Helper to read query params
+            function getQueryParam(name) {
+                return new URLSearchParams(window.location.search).get(name) || '';
+            }
+            const participantId = getQueryParam('PROLIFIC_PID') || getQueryParam('workerId') || 'unknown';
+
+            // Load trials
+            const raw = await fetch(DATA_PATH).then(r => r.text());
+            const trials = raw.trim().split('\n').map(line => JSON.parse(line));
+
+            let idx = 0;
+            const responses = [];
+
+            // Element refs
+            const introDiv = document.getElementById('intro');
+            const taskDiv = document.getElementById('task');
+            const compDiv = document.getElementById('completion');
+            const toggleBtn = document.getElementById('toggleInstructions');
+            const instrDiv = document.getElementById('instructions-panel');
+            const progressEl = document.getElementById('progress');
+            const sentenceEl = document.getElementById('sentence');
+            const imageEl = document.getElementById('image');
+            const form = document.getElementById('responseForm');
+            const fieldset = document.getElementById('responseOptions');
+            const nextBtn = document.getElementById('nextButton');
+
+            // 1) Start button
+            document.getElementById('startButton').onclick = () => {
+                introDiv.style.display = 'none';
+                taskDiv.style.display = 'block';
+                showTrial();
+            };
+
+            // 2) Toggle instructions panel
+            toggleBtn.onclick = () => {
+                const showing = instrDiv.style.display === 'block';
+                instrDiv.style.display = showing ? 'none' : 'block';
+                toggleBtn.textContent = showing ? 'Show Instructions' : 'Hide Instructions';
+            };
+
+            // Show one trial
+            function showTrial() {
+                const t = trials[idx];
+                // Update progress
+                progressEl.textContent = `Trial ${idx + 1} of ${trials.length}`;
+                // Sentence & image
+                sentenceEl.textContent = `Sentence: ${t.sentence}`;
+                // Disable until image loads
+                fieldset.disabled = true;
+                nextBtn.disabled = true;
+                // Load image
+                imageEl.onload = () => {
+                    fieldset.disabled = false;
+                    nextBtn.disabled = false;
+                };
+                imageEl.src = t.img_path;
+                form.reset();
+            }
+
+            // Handle submit
+            form.addEventListener('submit', async e => {
+                e.preventDefault();
+                const ans = form.answer.value;
+                responses.push({ id: trials[idx].id, answer: ans });
+                idx++;
+                if (idx < trials.length) {
+                    showTrial();
+                } else {
+                    // All done → send results
+                    const payload = {
+                        participantId,
+                        timestamp: new Date().toISOString(),
+                        responses
+                    };
+                    // POST without CORS
+                    await fetch(SUBMIT_URL, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    // Show completion
+                    taskDiv.style.display = 'none';
+                    compDiv.style.display = 'block';
+                }
+            });
+        })();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,11 @@
+image_url,sentence
+https://cleanimages.s3.us-east-1.amazonaws.com/mturk_mcts_grpo_sat/images/0_1.png,"Next, analyzing the position of the chair at (268, 154) in Image 1, it seems more stationary compared to the similar area in Image 2."
+https://cleanimages.s3.us-east-1.amazonaws.com/mturk_mcts_grpo_sat/images/1_1.png,"Let's confirm this by checking the middle wall near the table (710, 340)."
+https://cleanimages.s3.us-east-1.amazonaws.com/mturk_mcts_grpo_sat/images/4_0.png,"The chair near the ""7"" is located at (236, 193), which is slightly left and forward from where the ""straight"" view starts."
+https://cleanimages.s3.us-east-1.amazonaws.com/mturk_mcts_grpo_sat/images/5_1.png,"Inspecting the plant at (205,303) reveals that it seems stationary as well."
+https://cleanimages.s3.us-east-1.amazonaws.com/mturk_mcts_grpo_sat/images/7_4.png,"Comparing the third bedroom window frame location (330, 150) in the two images reveals consistent alignment, suggesting no significant movement affecting the sofa, confirming the general pattern of movement."
+https://cleanimages.s3.us-east-1.amazonaws.com/mturk_mcts_grpo_sat/images/9_2.png,"In Image 1, observe the chair's location (400, 270)."
+https://cleanimages.s3.us-east-1.amazonaws.com/mturk_mcts_grpo_sat/images/10_3.png,"Next, consider the position of the books on the table at (305, 221)."
+https://cleanimages.s3.us-east-1.amazonaws.com/mturk_mcts_grpo_sat/images/11_3.png,"Based on the plant's visibility near (700, 300), the image suggests that despite the shifting perspective, the plant retains its upright posture, hinting that it has been slightly rotated rather than truly moved."
+https://cleanimages.s3.us-east-1.amazonaws.com/mturk_mcts_grpo_sat/images/12_5.png,"In Image 1, the table is more to the left at (90, 230)."
+https://cleanimages.s3.us-east-1.amazonaws.com/mturk_mcts_grpo_sat/images/13_1.png,"From this standpoint, the angle required to meet the target (around (6, 180)) means turning left by a significant degree would suffice."
