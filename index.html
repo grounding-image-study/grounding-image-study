@@ -40,10 +40,15 @@
             margin-bottom: 20px;
         }
 
-        #startButton,
-        #toggleInstructions,
-        #nextButton {
+        button,
+        input {
             cursor: pointer;
+            font-size: 1em;
+        }
+
+        #startButton[disabled] {
+            opacity: 0.5;
+            cursor: not-allowed;
         }
     </style>
 </head>
@@ -51,9 +56,11 @@
 <body>
     <h1>Image Point Verification</h1>
 
-    <!-- 1) Intro screen -->
+    <!-- 1) Intro screen: now asks for Participant ID -->
     <div id="intro">
         <h2>Welcome to the Study!</h2>
+        <p>Please enter your Participant ID to begin:</p>
+        <input type="text" id="participantIdInput" placeholder="e.g. abc123" />
         <p>In this study, you will see images with a <strong>green dot</strong> and a <strong>red circle</strong>, plus
             a sentence describing an object or region in the image.</p>
         <p>Your task is simple:</p>
@@ -61,12 +68,11 @@
             <li>Choose <strong>"Yes"</strong> if <u>any part</u> of the described region is inside the red circle.</li>
             <li>Choose <strong>"No"</strong> otherwise.</li>
         </ul>
-        <button id="startButton">Start Study</button>
+        <button id="startButton" disabled>Start Study</button>
     </div>
 
     <!-- 2) Main task -->
     <div id="task">
-        <!-- 2a) Toggleable instructions -->
         <button id="toggleInstructions">Show Instructions</button>
         <div id="instructions-panel">
             <h3>Detailed Instructions</h3>
@@ -82,14 +88,10 @@
             <p><em>We’re testing rough alignment, not pixel-perfect accuracy.</em></p>
         </div>
 
-        <!-- 3) Progress indicator -->
         <p id="progress"></p>
-
-        <!-- Sentence + Image -->
         <p id="sentence"></p>
         <img id="image" src="" alt="Task image">
 
-        <!-- 4) Response form, disabled until image loads -->
         <form id="responseForm">
             <fieldset id="responseOptions" disabled>
                 <label><input type="radio" name="answer" value="Yes" required> Yes</label><br>
@@ -111,18 +113,19 @@
             const DATA_PATH = `data/${STUDY}/data.jsonl`;
             const SUBMIT_URL = 'https://script.google.com/macros/s/AKfycby93WIxDfo4fx1Mvl2UO84MUO9qI3JMKWp6MAIW3wY35BA5aXCPSjiHUdmLR_CxK1N-5A/exec';
 
-            // Helper to read query params
-            function getQueryParam(name) {
-                return new URLSearchParams(window.location.search).get(name) || '';
-            }
-            const participantId = getQueryParam('PROLIFIC_PID') || getQueryParam('workerId') || 'unknown';
+            // 1) Participant ID handling
+            let participantId = '';
+            const idInput = document.getElementById('participantIdInput');
+            const startButton = document.getElementById('startButton');
 
-            // Load trials
+            // Enable start once they type something
+            idInput.addEventListener('input', () => {
+                startButton.disabled = idInput.value.trim() === '';
+            });
+
+            // Load trials in advance
             const raw = await fetch(DATA_PATH).then(r => r.text());
             const trials = raw.trim().split('\n').map(line => JSON.parse(line));
-
-            let idx = 0;
-            const responses = [];
 
             // Element refs
             const introDiv = document.getElementById('intro');
@@ -137,31 +140,30 @@
             const fieldset = document.getElementById('responseOptions');
             const nextBtn = document.getElementById('nextButton');
 
-            // 1) Start button
-            document.getElementById('startButton').onclick = () => {
+            // 2) Start: save ID, hide intro, show task
+            startButton.onclick = () => {
+                participantId = idInput.value.trim();
                 introDiv.style.display = 'none';
                 taskDiv.style.display = 'block';
                 showTrial();
             };
 
-            // 2) Toggle instructions panel
+            // 3) Toggle instructions
             toggleBtn.onclick = () => {
-                const showing = instrDiv.style.display === 'block';
-                instrDiv.style.display = showing ? 'none' : 'block';
-                toggleBtn.textContent = showing ? 'Show Instructions' : 'Hide Instructions';
+                const show = instrDiv.style.display !== 'block';
+                instrDiv.style.display = show ? 'block' : 'none';
+                toggleBtn.textContent = show ? 'Hide Instructions' : 'Show Instructions';
             };
 
-            // Show one trial
+            let idx = 0, responses = [];
+
+            // 4) Show one trial
             function showTrial() {
                 const t = trials[idx];
-                // Update progress
                 progressEl.textContent = `Trial ${idx + 1} of ${trials.length}`;
-                // Sentence & image
                 sentenceEl.textContent = `Sentence: ${t.sentence}`;
-                // Disable until image loads
                 fieldset.disabled = true;
                 nextBtn.disabled = true;
-                // Load image
                 imageEl.onload = () => {
                     fieldset.disabled = false;
                     nextBtn.disabled = false;
@@ -170,7 +172,7 @@
                 form.reset();
             }
 
-            // Handle submit
+            // 5) Submit answers
             form.addEventListener('submit', async e => {
                 e.preventDefault();
                 const ans = form.answer.value;
@@ -179,20 +181,17 @@
                 if (idx < trials.length) {
                     showTrial();
                 } else {
-                    // All done → send results
                     const payload = {
                         participantId,
                         timestamp: new Date().toISOString(),
                         responses
                     };
-                    // POST without CORS
                     await fetch(SUBMIT_URL, {
                         method: 'POST',
                         mode: 'no-cors',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(payload)
                     });
-                    // Show completion
                     taskDiv.style.display = 'none';
                     compDiv.style.display = 'block';
                 }
