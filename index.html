@@ -17,10 +17,8 @@
             max-width: 100%;
         }
 
-        #completion {
-            display: none;
-        }
-
+        #completion,
+        #submitting,
         #task {
             display: none;
         }
@@ -56,7 +54,7 @@
 <body>
     <h1>Image Point Verification</h1>
 
-    <!-- 1) Intro screen: now asks for Participant ID -->
+    <!-- 1) Intro screen -->
     <div id="intro">
         <h2>Welcome to the Study!</h2>
         <p>Please enter your Participant ID to begin:</p>
@@ -83,7 +81,7 @@
                 </li>
             </ul>
             <p><strong>Judgment Rule:</strong>
-                Select “Yes” if any part of the described object/region lies inside the red circle.
+                Select “Yes” if any part of the described region lies inside the red circle.
                 Otherwise, select “No.”</p>
             <p><em>We’re testing rough alignment, not pixel-perfect accuracy.</em></p>
         </div>
@@ -101,7 +99,13 @@
         </form>
     </div>
 
-    <!-- Completion screen -->
+    <!-- 3) Submitting screen -->
+    <div id="submitting">
+        <h2>All done!</h2>
+        <p>Saving your responses now. Please wait a second for your confirmation code…</p>
+    </div>
+
+    <!-- 4) Completion screen -->
     <div id="completion">
         <h2>Thank you!</h2>
         <p>Your completion code is: <strong>CR510SPY</strong></p>
@@ -113,23 +117,22 @@
             const DATA_PATH = `data/${STUDY}/data.jsonl`;
             const SUBMIT_URL = 'https://script.google.com/macros/s/AKfycby93WIxDfo4fx1Mvl2UO84MUO9qI3JMKWp6MAIW3wY35BA5aXCPSjiHUdmLR_CxK1N-5A/exec';
 
-            // 1) Participant ID handling
+            // Participant ID
             let participantId = '';
             const idInput = document.getElementById('participantIdInput');
             const startButton = document.getElementById('startButton');
-
-            // Enable start once they type something
             idInput.addEventListener('input', () => {
                 startButton.disabled = idInput.value.trim() === '';
             });
 
-            // Load trials in advance
+            // Preload trials
             const raw = await fetch(DATA_PATH).then(r => r.text());
-            const trials = raw.trim().split('\n').map(line => JSON.parse(line));
+            const trials = raw.trim().split('\n').map(l => JSON.parse(l));
 
             // Element refs
             const introDiv = document.getElementById('intro');
             const taskDiv = document.getElementById('task');
+            const submitDiv = document.getElementById('submitting');
             const compDiv = document.getElementById('completion');
             const toggleBtn = document.getElementById('toggleInstructions');
             const instrDiv = document.getElementById('instructions-panel');
@@ -140,7 +143,7 @@
             const fieldset = document.getElementById('responseOptions');
             const nextBtn = document.getElementById('nextButton');
 
-            // 2) Start: save ID, hide intro, show task
+            // Start study
             startButton.onclick = () => {
                 participantId = idInput.value.trim();
                 introDiv.style.display = 'none';
@@ -148,7 +151,7 @@
                 showTrial();
             };
 
-            // 3) Toggle instructions
+            // Toggle instructions
             toggleBtn.onclick = () => {
                 const show = instrDiv.style.display !== 'block';
                 instrDiv.style.display = show ? 'block' : 'none';
@@ -157,7 +160,6 @@
 
             let idx = 0, responses = [];
 
-            // 4) Show one trial
             function showTrial() {
                 const t = trials[idx];
                 progressEl.textContent = `Trial ${idx + 1} of ${trials.length}`;
@@ -172,15 +174,18 @@
                 form.reset();
             }
 
-            // 5) Submit answers
             form.addEventListener('submit', async e => {
                 e.preventDefault();
-                const ans = form.answer.value;
-                responses.push({ id: trials[idx].id, answer: ans });
+                responses.push({ id: trials[idx].id, answer: form.answer.value });
                 idx++;
                 if (idx < trials.length) {
                     showTrial();
                 } else {
+                    // show submitting screen
+                    taskDiv.style.display = 'none';
+                    submitDiv.style.display = 'block';
+
+                    // send payload
                     const payload = {
                         participantId,
                         timestamp: new Date().toISOString(),
@@ -192,7 +197,9 @@
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(payload)
                     });
-                    taskDiv.style.display = 'none';
+
+                    // then show completion code
+                    submitDiv.style.display = 'none';
                     compDiv.style.display = 'block';
                 }
             });
