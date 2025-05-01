@@ -59,13 +59,15 @@
         <h2>Welcome to the Study!</h2>
         <p>Please enter your Participant ID to begin:</p>
         <input type="text" id="participantIdInput" placeholder="e.g. abc123" />
-        <p>In this study, you will see images with a <strong>green dot</strong> and a <strong>red circle</strong>, plus
-            a sentence describing an object or region in the image.</p>
-        <p>Your task is simple:</p>
+        <p>In this study, you will see an image with a <strong>green dot</strong> and a <strong>red circle</strong>, plus
+            a sentence describing a region that exists in the image.</p>
+        <p>Your task is to:</p>
         <ul>
             <li>Choose <strong>"Yes"</strong> if <u>any part</u> of the described region is inside the red circle.</li>
             <li>Choose <strong>"No"</strong> otherwise.</li>
         </ul>
+        <p>For example, if the sentence describes a chair, and a chair is inside the red circle, choose "Yes".</p>
+        <p>If you are unsure, use your best judgement.</p>
         <button id="startButton" disabled>Start Study</button>
     </div>
 
@@ -76,20 +78,23 @@
             <h3>Detailed Instructions</h3>
             <p>You will be shown:</p>
             <ul>
-                <li>An image with a green dot and red circle (100×100 px radius).</li>
-                <li>A sentence referring to a region or object, often with coordinates (e.g. <code>(250, 150)</code>).
+                <li>An image with a green dot and red circle.</li>
+                <li>A sentence referring to a region or object that exists in the image.
                 </li>
             </ul>
             <p><strong>Judgment Rule:</strong>
-                Select “Yes” if any part of the described region lies inside the red circle.
+                Select “Yes” if any part of the described object/region lies inside the red circle.
                 Otherwise, select “No.”</p>
+            <p>For example, if the sentence describes a chair, and a chair is partially inside the red circle, choose "Yes".
+            </p>
+            <p>If you are unsure, use your best judgement.</p>
             <p><em>We’re testing rough alignment, not pixel-perfect accuracy.</em></p>
         </div>
-
+    
         <p id="progress"></p>
         <p id="sentence"></p>
         <img id="image" src="" alt="Task image">
-
+    
         <form id="responseForm">
             <fieldset id="responseOptions" disabled>
                 <label><input type="radio" name="answer" value="Yes" required> Yes</label><br>
