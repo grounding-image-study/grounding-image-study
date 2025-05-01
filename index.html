@@ -59,15 +59,16 @@
         <h2>Welcome to the Study!</h2>
         <p>Please enter your Participant ID to begin:</p>
         <input type="text" id="participantIdInput" placeholder="e.g. abc123" />
-        <p>In this study, you will see an image with a <strong>red circle</strong>, plus
-            a sentence describing a region in the image. The sentence will refer to an object or location in the image — it may mention something like “the chair at (300, 250)”.</p>
+        <p>In this study, you will see an image with a <strong>blue circle</strong>, plus
+            a sentence describing a region in the image. The sentence will refer to an object or location in the image — it may mention something like “the chair on the left side of the room”.</p>
         <p>Your task is to:</p>
         <ul>
-            <li>Choose <strong>"Yes"</strong> if <u>any part</u> of the described region is inside the red circle.</li>
-            <li>Choose <strong>"No"</strong> if the described object or region is <u>completely outside</u> the red circle.</li>
+            <li>Choose <strong>"Yes"</strong> if <u>any part</u> of the described region is inside the blue circle.</li>
+            <li>Choose <strong>"No"</strong> if the described object or region is <u>completely outside</u> the blue circle.</li>
         </ul>
-        <p>For example, if the sentence describes a chair, and a chair is inside or partially inside the red circle, choose "Yes".</p>
+        <p>For example, if the sentence describes a chair, and a chair is inside or partially inside the blue circle, choose "Yes".</p>
         <p>If you are unsure or the sentence region is ambiguous, use your best judgement.</p>
+        <p>Some images may have dots or lines on them with numbers or symbols. These should be ignored unless they are part of the sentence description.</p>
         <button id="startButton" disabled>Start Study</button>
     </div>
 
@@ -76,17 +77,19 @@
         <button id="toggleInstructions">Show Instructions</button>
         <div id="instructions-panel">
             <h3>Detailed Instructions</h3>
-            <p>In this study, you will see an image with a <strong>red circle</strong>, plus
+            <p>In this study, you will see an image with a <strong>blue circle</strong>, plus
                 a sentence describing a region in the image. The sentence will refer to an object or location in the image — it may
                 mention something like “the chair at (300, 250)”.</p>
             <p>Your task is to:</p>
             <ul>
-                <li>Choose <strong>"Yes"</strong> if <u>any part</u> of the described region is inside the red circle.</li>
-                <li>Choose <strong>"No"</strong> if the described object or region is <u>completely outside</u> the red circle.</li>
+                <li>Choose <strong>"Yes"</strong> if <u>any part</u> of the described region is inside the blue circle.</li>
+                <li>Choose <strong>"No"</strong> if the described object or region is <u>completely outside</u> the blue circle.</li>
             </ul>
-            <p>For example, if the sentence describes a chair, and a chair is inside or partially inside the red circle, choose
+            <p>For example, if the sentence describes a chair, and a chair is inside or partially inside the blue circle, choose
                 "Yes".</p>
             <p>If you are unsure or the sentence region is ambiguous, use your best judgement.</p>
+            <p>Some images may have dots or lines on them with numbers or symbols. These should be ignored unless they are part of the
+                sentence description.</p>
         </div>
     
         <p id="progress"></p>
@@ -116,7 +119,7 @@
 
     <script>
         (async function () {
-            const STUDY = 'mturk_mcts_grpo_sat';
+            const STUDY = 'mturk_mcts_bllink';
             const DATA_PATH = `data/${STUDY}/data.jsonl`;
             const SUBMIT_URL = 'https://script.google.com/macros/s/AKfycby93WIxDfo4fx1Mvl2UO84MUO9qI3JMKWp6MAIW3wY35BA5aXCPSjiHUdmLR_CxK1N-5A/exec';
 
