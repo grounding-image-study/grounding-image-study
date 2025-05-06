@@ -60,15 +60,29 @@
         <p>Please enter your Participant ID to begin:</p>
         <input type="text" id="participantIdInput" placeholder="e.g., abc123" />
 
-        <p>In this study, you will see an image with a <strong>blue circle</strong> and a sentence describing a region
-            in the image. The sentence will include a phrase "<strong>[shown with blue circle]</strong>" to help clarify
-            what the blue circle refers to.</p>
+        <p>In this study, you will see an image with a <strong>blue circle</strong>, plus
+            a sentence describing a region in the image. The sentence will refer to an object or location in the image — for
+            example, "the chair on the left side of the room." The sentence will include a phrase "[shown with blue
+            circle]" to indicate which part of the sentence corresponds to what you should be looking for in the blue circle.
+        </p>
 
-        <p>For each image, you will answer two questions:</p>
+        <p>Your task involves two questions per image:</p>
         <ol>
-            <li><strong>Accuracy:</strong> Does the described object or region overlap with the blue circle?</li>
-            <li><strong>Clarity:</strong> Did the blue circle help you clearly understand what part of the
-                image the sentence referred to?</li>
+            <li><strong>Accuracy:</strong> Decide whether any part of the region described by the sentence overlaps
+                with the blue circle:
+                <ul>
+                    <ul>
+                        <li>Choose <strong>"Yes"</strong> if <u>any part</u> of the described region is inside the blue circle.
+                        </li>
+                        <li>Choose <strong>"No"</strong> if the described object or region is <u>completely outside</u> the blue
+                            circle.
+                        </li>
+                        <li>Choose <strong>"Unsure"</strong> if you are unsure or the sentence region is ambiguous.</li>
+                    </ul>
+                </ul>
+            </li>
+            <li><strong>Clarity:</strong> Indicate how much the blue circle helped you understand what the
+                sentence was referring to in the image.</li>
         </ol>
 
         <div class="example-section">
@@ -78,13 +92,13 @@
             <div class="example-items">
                 <div class="example-item">
                     <p><strong>Sentence:</strong> "I will examine the school bus [shown with blue circle]"</p>
-                    <p><strong>Answer:</strong> Accuracy: Yes - because the blue circle overlaps with the school bus</p>
-                    <p><strong>Answer:</strong> Clarity: Select based on if the region helped me understand what the sentence referred to</p>
+                    <p><strong>Answer 1:</strong> Accuracy: Yes - because the blue circle overlaps with the school bus</p>
+                    <p><strong>Answer 2:</strong> Clarity: Select based on if the region helped me understand what the sentence referred to</p>
                 </div>
                 <div class="example-item">
                     <p><strong>Sentence:</strong> "Let's look at the people standing around [shown with blue circle]"</p>
-                    <p><strong>Answer:</strong> Accuracy: No - because the people are completely outside the blue circle</p>
-                    <p><strong>Answer:</strong> Clarity: Select based on if the region helped me understand what the sentence referred to</p>
+                    <p><strong>Answer 1:</strong> Accuracy: No - because the people are completely outside the blue circle</p>
+                    <p><strong>Answer 2:</strong> Clarity: Select based on if the region helped me understand what the sentence referred to</p>
                 </div>
             </div>
         </div>
@@ -97,20 +111,31 @@
         <button id="toggleInstructions">Show Instructions</button>
         <div id="instructions-panel">
             <h3>Detailed Instructions</h3>
+            <p>In this study, you will see an image with a <strong>blue circle</strong>, plus
+                a sentence describing a region in the image. The sentence will refer to an object or location in the image — for
+                example, "the chair on the left side of the room." The sentence will include a phrase "[shown with blue
+                circle]" to indicate which part of the sentence corresponds to what you should be looking for in the blue circle.
+            </p>
+            
             <p>Your task involves two questions per image:</p>
             <ol>
                 <li><strong>Accuracy:</strong> Decide whether any part of the region described by the sentence overlaps
                     with the blue circle:
                     <ul>
-                        <li><strong>Yes</strong> – if the region overlaps at all.</li>
-                        <li><strong>No</strong> – if completely outside.</li>
-                        <li><strong>Unsure</strong> – if unclear.</li>
+                        <ul>
+                            <li>Choose <strong>"Yes"</strong> if <u>any part</u> of the described region is inside the blue circle.
+                            </li>
+                            <li>Choose <strong>"No"</strong> if the described object or region is <u>completely outside</u> the blue
+                                circle.
+                            </li>
+                            <li>Choose <strong>"Unsure"</strong> if you are unsure or the sentence region is ambiguous.</li>
+                        </ul>
                     </ul>
                 </li>
-                <li><strong>Interpretability:</strong> Indicate how much the blue circle helped you understand what the
+                <li><strong>Clarity:</strong> Indicate how much the blue circle helped you understand what the
                     sentence was referring to in the image.</li>
             </ol>
-
+            
             <div class="example-section">
                 <h3>Example</h3>
                 <p>Here's an example to help you understand:</p>
@@ -118,15 +143,15 @@
                 <div class="example-items">
                     <div class="example-item">
                         <p><strong>Sentence:</strong> "I will examine the school bus [shown with blue circle]"</p>
-                        <p><strong>Answer:</strong> Accuracy: Yes - because the blue circle overlaps with the school bus</p>
-                        <p><strong>Answer:</strong> Clarity: Select based on if the region helped me understand what the
-                            sentence referred to</p>
+                        <p><strong>Answer 1:</strong> Accuracy: Yes - because the blue circle overlaps with the school bus</p>
+                        <p><strong>Answer 2:</strong> Clarity: Select based on if the region helped me understand what the sentence
+                            referred to</p>
                     </div>
                     <div class="example-item">
                         <p><strong>Sentence:</strong> "Let's look at the people standing around [shown with blue circle]"</p>
-                        <p><strong>Answer:</strong> Accuracy: No - because the people are completely outside the blue circle</p>
-                        <p><strong>Answer:</strong> Clarity: Select based on if the region helped me understand what the
-                            sentence referred to</p>
+                        <p><strong>Answer 1:</strong> Accuracy: No - because the people are completely outside the blue circle</p>
+                        <p><strong>Answer 2:</strong> Clarity: Select based on if the region helped me understand what the sentence
+                            referred to</p>
                     </div>
                 </div>
             </div>
