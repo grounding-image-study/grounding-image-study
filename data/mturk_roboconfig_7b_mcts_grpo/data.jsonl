@@ -1,5 +1,4 @@
 {"img_path": "data/mturk_roboconfig_7b_mcts_grpo/images/314_0.png", "sentence": "At point [shown with blue circle] near the bottom middle, the stove base is clearly defined as it sits firmly beneath the oven.", "id": "314", "index": 0}
-{"img_path": "data/mturk_roboconfig_7b_mcts_grpo/images/324_7.png", "sentence": "Validated position at coordinate [shown with blue circle].", "id": "324", "index": 7}
 {"img_path": "data/mturk_roboconfig_7b_mcts_grpo/images/300_2.png", "sentence": "To confirm, at point [shown with blue circle], I've found that the keyboard is visibly extending slightly from the monitor but still positioned lower than the monitor's stand.", "id": "300", "index": 2}
 {"img_path": "data/mturk_roboconfig_7b_mcts_grpo/images/298_0.png", "sentence": "The speaker is connected and located next to the monitor at [shown with blue circle].", "id": "298", "index": 0}
 {"img_path": "data/mturk_roboconfig_7b_mcts_grpo/images/326_0.png", "sentence": "Observing the scissor more closely, it is indeed under the bottle; thus, the answer is affirmative [shown with blue circle].", "id": "326", "index": 0}
@@ -38,7 +37,6 @@
 {"img_path": "data/mturk_roboconfig_7b_mcts_grpo/images/275_1.png", "sentence": "The orange is clearly positioned below the paper towel dispenser at [shown with blue circle].", "id": "275", "index": 1}
 {"img_path": "data/mturk_roboconfig_7b_mcts_grpo/images/348_1.png", "sentence": "The bathtub is located towards the left-middle part of the image, near [shown with blue circle].", "id": "348", "index": 1}
 {"img_path": "data/mturk_roboconfig_7b_mcts_grpo/images/268_9.png", "sentence": "Verifying the chair positioning at [shown with blue circle] finalize this conclusion.", "id": "268", "index": 9}
-{"img_path": "data/mturk_roboconfig_7b_mcts_grpo/images/250_3.png", "sentence": "Confirmed now at point [shown with blue circle].", "id": "250", "index": 3}
 {"img_path": "data/mturk_roboconfig_7b_mcts_grpo/images/263_0.png", "sentence": "The middle part of the lamp, around [shown with blue circle], confirms it is placed right next to the window near the blinds.", "id": "263", "index": 0}
 {"img_path": "data/mturk_roboconfig_7b_mcts_grpo/images/241_2.png", "sentence": "Let's check if the mat might be partially under the table at [shown with blue circle].", "id": "241", "index": 2}
 {"img_path": "data/mturk_roboconfig_7b_mcts_grpo/images/284_2.png", "sentence": "The curtain is clearly visible to the left of the lamp, covering part of the window [shown with blue circle].", "id": "284", "index": 2}
